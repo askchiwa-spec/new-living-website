@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>anime.js v4 adapter demo | New Living (dev only)</title>
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/png" href="assets/img/favicon-48.png">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<link rel="stylesheet" href="assets/css/style.css">
+<script type="importmap">
+{
+  "imports": {
+    "animejs": "./assets/vendor/animejs/index.js",
+    "animejs/adapters/three": "./assets/vendor/animejs/adapters/three/index.js",
+    "three": "./assets/vendor/three/three.module.min.js"
+  }
+}
+</script>
+<style>
+  .demo { border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--white); padding: var(--sp-4); margin-bottom: var(--sp-4); }
+  .demo h2 { font-size: var(--fs-h3); }
+  .demo__stage { position: relative; padding: var(--sp-3) 0; }
+  .demo__track { width: 21.5rem; max-width: 100%; border-bottom: 1px dashed var(--line); padding: 0.4rem 0; }
+
+  .square {
+    width: 3rem; height: 3rem; background: var(--ink); color: var(--sage);
+    position: relative; margin: 1.5rem 0;
+  }
+  /* From Uiverse-style companion CSS the user saved — the ::after reads the
+     animated CSS variable via var() */
+  .demo .css-variables.square:after {
+    position: absolute;
+    opacity: .5;
+    top: 0;
+    left: 0;
+    content: "";
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: currentColor;
+    border-radius: inherit;
+    transform: scale(var(--pseudo-el-after-scale));
+  }
+
+  .loop, .loop-alternate, .loop-reverse, .loop-infinity {
+    width: 1.5rem; height: 1.5rem; background: var(--amber); border-radius: var(--radius);
+  }
+  .demo__label { font-size: var(--fs-xs); font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-soft); }
+
+  .morph { stroke: var(--amber-deep); stroke-width: 3; fill: none; }
+  .drawline { stroke: var(--sage); stroke-width: 3; fill: none; stroke-linecap: round; }
+
+  .pgrid {
+    display: grid; grid-template-columns: repeat(16, 14px); gap: 8px;
+    justify-content: start; padding: var(--sp-3) 0;
+  }
+  .p {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--amber);
+  }
+  .p:nth-child(3n) { background: var(--sage); }
+  .p:nth-child(7n) { background: var(--ink); }
+</style>
+</head>
+<body>
+
+<main id="main" tabindex="-1">
+<section class="section section--tight">
+  <div class="shell" style="max-width:900px">
+    <p class="eyebrow">Dev playground &mdash; not linked from the site</p>
+    <h1 style="font-size:var(--fs-h2)">The adapter, previewed</h1>
+    <p class="lead">Each block below runs one of the saved anime.js v4 snippets <strong>verbatim</strong> through the import-map adapter (<code>import &hellip; from 'animejs'</code>). If these move, the adapter works.</p>
+
+    <div class="demo">
+      <h2>1 &middot; CSS variables + pseudo-element (saved snippet)</h2>
+      <p class="demo__label">--radius, --x and --pseudo-el-after-scale animate; the ::after echo reads the variable</p>
+      <div class="demo__stage"><div class="css-variables square"></div></div>
+    </div>
+
+    <div class="demo">
+      <h2>2 &middot; Loop variants (saved snippet)</h2>
+      <div class="demo__stage">
+        <div class="demo__track"><span class="demo__label">loop: 3</span><div class="loop"></div></div>
+        <div class="demo__track"><span class="demo__label">loop: 3, alternate</span><div class="loop-alternate"></div></div>
+        <div class="demo__track"><span class="demo__label">loop: 3, reversed</span><div class="loop-reverse"></div></div>
+        <div class="demo__track"><span class="demo__label">loop: true</span><div class="loop-infinity"></div></div>
+      </div>
+    </div>
+
+    <div class="demo">
+      <h2>3 &middot; SVG polygon morph + createDrawable (saved snippets)</h2>
+      <div class="demo__stage" style="display:flex;gap:3rem;flex-wrap:wrap;align-items:center">
+        <svg width="128" height="110" viewBox="0 0 128 110" aria-hidden="true">
+          <polygon class="morph" points="64 12 10 40 10 88 64 104 118 88 118 40"/>
+        </svg>
+        <svg width="260" height="60" viewBox="0 0 260 60" aria-hidden="true">
+          <path class="drawline" d="M8 30 C 48 6, 88 54, 128 30 S 212 6, 252 30"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="demo">
+      <h2>4 &middot; Particles &mdash; staggered grid ripple</h2>
+      <p class="demo__label">160 dots created by JS, rippling from the center via stagger(&hellip;, {grid, from: 'center'})</p>
+      <div class="pgrid" id="particles" aria-hidden="true"></div>
+    </div>
+
+    <div class="demo">
+      <h2>5 &middot; The Three.js adapter &mdash; the cubes from the demo video</h2>
+      <p class="demo__label">64-instance cube grid via getInstances() from animejs/adapters/three (needs anime.js 4.5+)</p>
+      <div class="full-container" style="width:100%;height:380px;color:var(--sage)"></div>
+    </div>
+
+    <p id="status" class="form__notice">Loading the adapter&hellip;</p>
+    <p><a class="tlink" href="index.html">Back to the site</a></p>
+  </div>
+</section>
+</main>
+
+<script type="module">
+/* Everything below is the user's saved snippets, unchanged except:
+   loop/alternate added to demo 1 so it stays visible, and a reduced-motion
+   guard because even a playground on this project respects that. */
+import { animate, utils, svg, stagger } from 'animejs';
+
+const status = document.getElementById('status');
+status.textContent = 'Adapter working — animejs v4 ESM resolved through the import map.';
+
+if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+
+  /* 1 — CSS variables (saved snippet) */
+  utils.set('.square', {
+    '--radius': '4px',
+    '--x': '0rem',
+    '--pseudo-el-after-scale': '1',
+    borderRadius: () => 'var(--radius)',
+    translateX: () => 'var(--x)',
+  });
+  animate('.square', {
+    '--radius': '20px',
+    '--x': '16.5rem',
+    '--pseudo-el-after-scale': '1.55',
+    loop: true,
+    alternate: true,
+  });
+
+  /* 2 — Loop variants (saved snippet) */
+  animate('.loop',           { x: '17.5rem', loop: 3 });
+  animate('.loop-alternate', { x: '17.5rem', loop: 3, alternate: true });
+  animate('.loop-reverse',   { x: '17.5rem', loop: 3, reversed: true });
+  animate('.loop-infinity',  { x: '17.5rem', loop: true });
+
+  /* 3 — Polygon morph (saved snippet) + createDrawable (saved snippet) */
+  animate('polygon', {
+    points: '64 68.64 8.574 100 63.446 67.68 64 4 64.554 67.68 119.426 100',
+    alternate: true,
+    loop: true,
+  });
+  animate(svg.createDrawable('.drawline'), {
+    draw: ['0 0', '0 1'],
+    duration: 1800,
+    ease: 'inOutQuad',
+    alternate: true,
+    loop: true,
+  });
+
+  /* 4 — Particles. The library ships no particles; you create the elements,
+     it moves them. This is the classic staggered-grid ripple. */
+  const GRID = [16, 10];
+  const wrap = document.getElementById('particles');
+  for (let i = 0; i < GRID[0] * GRID[1]; i++) {
+    wrap.appendChild(document.createElement('span')).className = 'p';
+  }
+  animate('.p', {
+    scale: [0.25, 1],
+    opacity: [0.2, 1],
+    translateY: [3, -3],
+    delay: stagger(90, { grid: GRID, from: 'center' }),
+    duration: 650,
+    ease: 'inOutQuad',
+    alternate: true,
+    loop: true,
+  });
+} else {
+  status.textContent += ' (Animations parked: your system asks for reduced motion.)';
+}
+</script>
+<script type="module">
+/* 5 — The Three.js adapter, the user's saved snippet (animejs 4.5+ only).
+   Every animejs import MUST come from the same module URL as the adapter,
+   or the engine won't see the adapter registry. */
+if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  const [{ animate, createTimer, stagger, utils }, THREE, { getInstances }] = await Promise.all([
+    import('animejs'),
+    import('three'),
+    import('animejs/adapters/three'),
+  ]);
+
+  const [ $container ] = utils.$('.full-container');
+  const color = getComputedStyle($container).color;
+  const { width, height } = $container.getBoundingClientRect();
+
+  const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true, preserveDrawingBuffer: true });
+  renderer.shadowMap.enabled = true;
+  renderer.setSize(width, height);
+  renderer.setPixelRatio(window.devicePixelRatio);
+  $container.appendChild(renderer.domElement);
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 100);
+  camera.position.z = 6;
+  scene.add(camera);
+
+  scene.add(new THREE.AmbientLight(0xffffff, 0.25));
+  const pointLight = new THREE.PointLight(0xffffff, 8, 20, 0.4);
+  pointLight.castShadow = true;
+  scene.add(pointLight);
+
+  const dirLight = new THREE.DirectionalLight(0xffffff, 2);
+  dirLight.position.set(2, 3, 4);
+  scene.add(dirLight);
+
+  const gridSize = 4;
+  const cellSize = 2 / gridSize;
+  const spread = (gridSize - 1) / 2 * cellSize;
+  const geometry = new THREE.BoxGeometry(cellSize, cellSize, cellSize);
+  const material = new THREE.MeshLambertMaterial({ color });
+  const mesh = new THREE.InstancedMesh(geometry, material, gridSize * gridSize * gridSize);
+  mesh.castShadow = mesh.receiveShadow = true;
+  scene.add(mesh);
+
+  const instances = getInstances(mesh);
+
+  utils.set(instances, {
+    x: stagger([-spread, spread], { grid: [gridSize, gridSize, gridSize], axis: 'x' }),
+    y: stagger([-spread, spread], { grid: [gridSize, gridSize, gridSize], axis: 'y' }),
+    z: stagger([-spread, spread], { grid: [gridSize, gridSize, gridSize], axis: 'z' }),
+  });
+
+  animate(mesh, {
+    rotateY: { to: 360, duration: 9000 },
+    rotateX: { to: 360, duration: 12000 },
+    loop: true,
+    ease: 'inOutQuad',
+  });
+
+  animate(pointLight, {
+    intensity: [30, 0],
+    duration: 2500,
+    loop: true,
+    loopDelay: 500,
+    alternate: true,
+    ease: 'out(3)',
+  });
+
+  animate(instances, {
+    x: (instance) => instance.x * 10,
+    y: (instance) => instance.y * 10,
+    z: (instance) => instance.z * 10,
+    duration: 2000,
+    delay: stagger([0, 500], { grid: true, from: 'center', reversed: true, ease: 'in(3)' }),
+    loop: true,
+    loopDelay: 500,
+    alternate: true,
+    ease: 'inOutExpo',
+  });
+
+  createTimer({ onUpdate: () => renderer.render(scene, camera) });
+}
+</script>
+</body>
+</html>
