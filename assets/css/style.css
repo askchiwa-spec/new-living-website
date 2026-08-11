@@ -241,7 +241,20 @@ hr { border: 0; border-top: 1px solid var(--line); margin: var(--sp-5) 0; }
 .nav-toggle[aria-expanded="true"] .nav-toggle__bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
 @media (max-width: 900px) {
+  /* backdrop-filter turns the header into the containing block for fixed
+     descendants, which pinned the slide-out nav to the header's 74px box and
+     left the menu list floating transparent over page content. On mobile the
+     header goes solid instead, so the nav panel anchors to the viewport. */
+  .site-header { background: var(--paper); backdrop-filter: none; -webkit-backdrop-filter: none; }
+
   .nav-toggle { display: block; }
+
+  /* Scrim behind the open menu — dims the page so the panel reads as a layer */
+  body.nav-open::before {
+    content: ""; position: fixed; inset: 0; z-index: 55;
+    background: rgba(18, 37, 26, .45);
+  }
+
   .nav {
     position: fixed; inset: 0 0 0 auto; width: min(84vw, 340px);
     background: var(--paper); border-left: 1px solid var(--line);

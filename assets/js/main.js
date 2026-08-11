@@ -28,6 +28,7 @@
       var open = toggle.getAttribute('aria-expanded') === 'true';
       toggle.setAttribute('aria-expanded', String(!open));
       nav.classList.toggle('is-open', !open);
+      document.body.classList.toggle('nav-open', !open);
       document.body.style.overflow = !open ? 'hidden' : '';
 
       if (!open && hasAnime && !reduced) {
@@ -41,9 +42,15 @@
       }
     });
 
-    // Close on Escape, and when a link is followed
+    // Close on Escape, on a tap outside the panel (the scrim), and when a
+    // link is followed
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && nav.classList.contains('is-open')) toggle.click();
+    });
+    document.addEventListener('click', function (e) {
+      if (nav.classList.contains('is-open') && !e.target.closest('.nav') && !e.target.closest('.nav-toggle')) {
+        toggle.click();
+      }
     });
     nav.addEventListener('click', function (e) {
       if (e.target.closest('a') && nav.classList.contains('is-open')) toggle.click();
