@@ -90,7 +90,7 @@ One actual UIverse component is integrated: the two-block orbit spinner by satya
 3. **Add staff licensure.** Post-nominals (LGSW, LICSW, APRN) beside each name on `staff.html`. It is the first thing a referring hospital or a family member looks for. There is a note in the page marking where.
 4. **Staff photographs** only with written consent from each person.
 5. **Wire the contact form.** It currently intercepts submission and tells the user to call. Do not accept real submissions until it posts to a handler you control — and keep the "do not include health information" notice regardless, since a public web form is not an appropriate channel for PHI.
-6. **Verify the crisis numbers** before launch. 988 (Suicide & Crisis Lifeline) and 1-888-793-4357 (DC DBH Access HelpLine) are included in the top bar of every page and in a block at the foot of every page. This was the largest gap on the existing site — a behavioral health provider whose site offered no route to help outside of 9–6 office hours.
+6. **Verify the crisis and grievance numbers** before launch. The DBH consumer grievance line on notices.html is published as 202-673-4374 (client-provided); note DBH's public Consumer Rights page lists (202) 673-4372 for grievance specialists — confirm which is correct with DBH. 988 (Suicide & Crisis Lifeline) and 1-888-793-4357 (DC DBH Access HelpLine) are included in the top bar of every page and in a block at the foot of every page. This was the largest gap on the existing site — a behavioral health provider whose site offered no route to help outside of 9–6 office hours.
 
 **Technical**
 
