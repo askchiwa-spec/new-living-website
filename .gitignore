@@ -1,2 +1,4 @@
 _canva-library/
 .DS_Store
+.vercel
+.env*
