@@ -176,8 +176,12 @@
       <div class="form__notice" style="margin-bottom:1.5rem">
         The fastest route is the BambooHR portal above. This form reaches our recruitment team directly.
       </div>
-      <form class="form" data-csw-form novalidate
-            data-form-message="Online applications are not connected yet &mdash; please use the &ldquo;Apply as a CSW&rdquo; button above to apply through our BambooHR portal, or call 202-248-1356.">
+      <form class="form" data-csw-form data-endpoint="https://formsubmit.co/ajax/hr@newlivinghealthcare.com" novalidate
+            data-success-message="Thank you &mdash; your application was received. We will be in touch. You can also apply through our BambooHR portal above."
+            data-fail-message="Sorry, the application could not be sent. Please use the &ldquo;Apply as a CSW&rdquo; button above, or email hr@newlivinghealthcare.com.">
+        <input type="hidden" name="_subject" value="CSW application — newlivinghealthcare.com">
+        <input type="hidden" name="_template" value="table">
+        <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
         <div class="field">
           <label for="csw-name">Full name</label>
           <input id="csw-name" name="name" type="text" autocomplete="name" required>

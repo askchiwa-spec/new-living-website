@@ -267,9 +267,11 @@
           return r.json();
         }).then(function () {
           form.reset();
-          finish('Thank you — we received your message and will call you back during office hours.');
+          finish(form.getAttribute('data-success-message') ||
+            'Thank you — we received your message and will call you back during office hours.');
         }).catch(function () {
-          finish('Sorry, the message could not be sent. Please call 202-248-1356 or email info@newlivinghealthcare.com.');
+          finish(form.getAttribute('data-fail-message') ||
+            'Sorry, the message could not be sent. Please call 202-248-1356 or email info@newlivinghealthcare.com.');
         });
       } else {
         window.setTimeout(function () {
