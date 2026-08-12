@@ -239,20 +239,44 @@
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       var status = form.querySelector('[data-form-status]');
+      var endpoint = form.getAttribute('data-endpoint');
 
       if (spinner) spinner.hidden = false;
       if (submitBtn) submitBtn.disabled = true;
 
-      window.setTimeout(function () {
+      function finish(message) {
         if (spinner) spinner.hidden = true;
         if (submitBtn) submitBtn.disabled = false;
         if (status) {
           status.hidden = false;
-          status.textContent = form.getAttribute('data-form-message') ||
-            'This form is not connected yet. Please call 202-248-1356 or email info@newlivinghealthcare.com.';
+          status.textContent = message;
           status.focus();
         }
-      }, 400);
+      }
+
+      if (endpoint) {
+        // Real delivery via the form relay. The "no health information"
+        // notice above the form stays load-bearing: nothing clinical
+        // belongs in this channel.
+        window.fetch(endpoint, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { 'Accept': 'application/json' }
+        }).then(function (r) {
+          if (!r.ok) throw new Error('relay rejected');
+          return r.json();
+        }).then(function () {
+          form.reset();
+          finish('Thank you — we received your message and will call you back during office hours.');
+        }).catch(function () {
+          finish('Sorry, the message could not be sent. Please call 202-248-1356 or email info@newlivinghealthcare.com.');
+        });
+      } else {
+        window.setTimeout(function () {
+          finish(form.getAttribute('data-form-message') ||
+            'This form is not connected yet. Please call 202-248-1356 or email info@newlivinghealthcare.com.');
+        }, 400);
+      }
     });
   });
 

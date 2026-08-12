@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>New Living — Reach Us QR Flyer (print)</title>
+<meta name="robots" content="noindex">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Public+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  @page { size: letter; margin: 0; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 8.5in; height: 10.96in; overflow: hidden;
+    font-family: "Public Sans", sans-serif; color: #1C3A26; background: #F3F5EE;
+    display: flex; flex-direction: column;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  .band {
+    background: #12251A; color: #fff;
+    display: flex; align-items: center; gap: .35in;
+    padding: .32in .7in;
+  }
+  .band img { height: .9in; filter: brightness(0) invert(1); opacity: .95; }
+  .band h1 { font-family: "Fraunces", serif; font-weight: 600; font-size: 34px; line-height: 1.1; }
+  .band .sub { color: #E4A140; font-weight: 700; letter-spacing: .18em; font-size: 13px; margin-top: 6px; }
+
+  .main { flex: 1; display: flex; flex-direction: column; align-items: center; text-align: center; padding: .38in .7in 0; }
+  .main h2 { font-family: "Fraunces", serif; font-weight: 600; font-size: 40px; }
+  .main .lead { font-size: 17px; line-height: 1.55; color: #47604C; max-width: 5.6in; margin-top: .18in; }
+  .qr-card {
+    margin-top: .3in; background: #fff; border: 1px solid #CED9C8; border-radius: 14px;
+    padding: .35in .35in .25in; box-shadow: 0 6px 24px rgba(18,37,26,.08);
+  }
+  .qr-card img { width: 2.85in; height: 2.85in; display: block; }
+  .qr-card .url { font-size: 12.5px; font-weight: 600; color: #47604C; margin-top: .16in; letter-spacing: .02em; }
+  .steps { display: flex; gap: .5in; margin-top: .28in; font-size: 13.5px; font-weight: 600; color: #1C3A26; }
+  .steps span b { color: #C2822A; font-family: "Fraunces", serif; font-size: 17px; margin-right: 6px; }
+  .call { margin-top: .26in; font-size: 16px; }
+  .call strong { color: #C2822A; }
+  .nophi { margin-top: .18in; font-size: 12px; color: #47604C; max-width: 5.4in; }
+
+  .crisis {
+    background: #12251A; color: #C2D2C2; text-align: center;
+    padding: .22in .7in; font-size: 12.5px; line-height: 1.6;
+  }
+  .crisis strong { color: #E4A140; }
+  .crisis .addr { color: #96AC98; font-size: 11.5px; margin-top: 6px; }
+  .rule { width: 88px; height: 4px; background: #E4A140; margin: .22in auto 0; }
+</style>
+</head>
+<body>
+
+<div class="band">
+  <img src="../assets/img/logo-tree.png" alt="">
+  <div>
+    <h1>New Living</h1>
+    <div class="sub">HEALTH CARE SERVICES</div>
+  </div>
+</div>
+
+<div class="main">
+  <h2>Need to reach us?</h2>
+  <div class="rule"></div>
+  <p class="lead">Scan the code with your phone camera, tell us your name and the best way to reach you &mdash; and <strong>we will call you back</strong> during office hours.</p>
+
+  <div class="qr-card">
+    <img src="../assets/img/qr-contact.png" alt="QR code linking to www.newlivinghealthcare.com/contact.html">
+    <div class="url">www.newlivinghealthcare.com</div>
+  </div>
+
+  <div class="steps">
+    <span><b>1</b>Scan</span>
+    <span><b>2</b>Tell us how to reach you</span>
+    <span><b>3</b>We call you back</span>
+  </div>
+
+  <p class="call">Prefer to talk now? Call <strong>202&#8209;248&#8209;1356</strong> &middot; Monday&ndash;Friday, 9:00 AM&ndash;6:00 PM</p>
+  <p class="nophi">Please don&rsquo;t include medical details in the message &mdash; just how to reach you.</p>
+</div>
+
+<div class="crisis">
+  <strong>Need help right now?</strong> Call or text <strong>988</strong> (Suicide &amp; Crisis Lifeline) &middot; DC Access HelpLine <strong>1&#8209;888&#8209;793&#8209;4357</strong> &mdash; both answer 24 hours.
+  <div class="addr">New Living Health Care Services, LLC &middot; 350 Eastern Avenue NE, Washington, DC 20019</div>
+</div>
+
+</body>
+</html>
