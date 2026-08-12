@@ -54,11 +54,18 @@
     "opens": "09:00",
     "closes": "18:00"
   },
-  "areaServed": {
-    "@type": "AdministrativeArea",
-    "name": "District of Columbia"
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 38.8905,
+    "longitude": -76.9482
   },
+  "areaServed": [
+    { "@type": "AdministrativeArea", "name": "District of Columbia" },
+    { "@type": "Place", "name": "Ward 7, Washington, DC" },
+    { "@type": "Place", "name": "Deanwood, Washington, DC" }
+  ],
   "medicalSpecialty": "Psychiatric",
+  "knowsAbout": ["behavioral health", "mental health services", "diagnostic assessment", "medication management", "counseling", "community support services", "Core Service Agency"],
   "sameAs": [
     "https://twitter.com/NewLivingDC",
     "https://www.facebook.com/profile.php?id=100092597114847"
