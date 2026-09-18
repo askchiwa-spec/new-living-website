@@ -1,4 +1,4 @@
-# New Living Health Care Services — website revamp
+# New Living HealthCare Services — website revamp
 
 Static site. No build step, no dependencies to install. Upload the folder to any host (Netlify, Vercel, Cloudflare Pages, cPanel, S3) and it runs.
 
