@@ -43,7 +43,9 @@ To preview locally: `python3 -m http.server` in this folder, then open `http://l
 
 ## Motion
 
-`anime.js 4.4.1` (UMD build) from cdnjs with subresource integrity, used for five things only: the hero entrance, staggered section reveals, the mobile nav slide, the Notices accordion, and a once-per-session draw-on of the brand mark (via `anime.svg.createDrawable`). The scroll thread runs on `requestAnimationFrame` rather than anime.js so it stays smooth. Everything is called through the `window.anime` namespace (`anime.animate`, `anime.stagger`, `anime.svg`, `anime.utils`), so the classic-script fallback still applies if the CDN fails.
+Fonts (Fraunces, Public Sans) are self-hosted under `assets/fonts/` and declared in `assets/css/fonts.css` — no third-party font CDN, no visitor-IP leak to Google.
+
+`anime.js 4.4.1` used for the hero and reveals; see main.js.
 
 **ESM adapter.** Every page also carries an import map resolving `animejs` to the v4 ESM build (with its own integrity hash). That means any anime.js v4 snippet written in module style works verbatim in a `<script type="module">` block, no build step:
 
