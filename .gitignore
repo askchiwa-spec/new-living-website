@@ -2,3 +2,8 @@ _canva-library/
 .DS_Store
 .vercel
 .env*
+
+# Canva "Save webpage" junk — keep local, never ship
+*- Photos by Canva_files/
+assets/img/*Canva_files/
+assets/vendor/13-1.png.webp
